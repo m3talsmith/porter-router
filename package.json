@@ -1,0 +1,32 @@
+{
+  "name": "porter-router",
+  "version": "0.1.0",
+  "homepage": "https://github.com/agrarianlabs/porter-router#readme",
+  "description": "A router for porter that acts as a channel to window hash changes and links hash paths to callbacks.",
+  "keywords": [
+    "porter",
+    "connector",
+    "channel",
+    "plugin",
+    "router"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agrarianlabs/porter-router.git"
+  },
+  "contributors": [
+    "Jason Goldberger <jlgoldb2@asu.edu>",
+    "Michael Christenson II <m3talsmith@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/agrarianlabs/porter-router/issues"
+  },
+  "dependencies": {
+    "porter-client": "^0.11.0"
+  }
+}

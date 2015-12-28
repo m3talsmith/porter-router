@@ -1,0 +1,29 @@
+{
+  "name": "porter-router",
+  "homepage": "https://github.com/agrarianlabs/porter-router#readme",
+  "authors": [
+    "Jason Goldberger <jlgoldb2@asu.edu>",
+    "Michael Christenson II <m3talsmith@gmail.com>"
+  ],
+  "description": "A contract for a new form of communication between front and backend tech.",
+  "main": "index.js",
+  "moduleType": [],
+  "keywords": [
+    "porter",
+    "connector",
+    "channel",
+    "plugin",
+    "router"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "porter": "~0.8.0"
+  }
+}
