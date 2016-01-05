@@ -7,11 +7,12 @@ class RoutePath {
   static matchForwardSlash     = "\\/";
 
 
-  constructor(pattern, action) {
-    this.action     = action;
-    this.rawPattern = pattern;
-    this.fragments  = [];
-    this.tokens     = [];
+  constructor(pattern, action, options) {
+    this.rawPattern   = pattern;
+    this.action       = action;
+    this.options      = options || {};
+    this.fragments    = [];
+    this.tokens       = [];
     this.setPattern(pattern);
   }
 

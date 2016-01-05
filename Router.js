@@ -1,7 +1,7 @@
 
+import * as queryString       from "query-string";
 import {Channel}              from "porter-client";
 
-import {queryStringToObject}  from "../utilities/helpers";
 import RoutePath              from "./RoutePath";
 
 
@@ -14,14 +14,16 @@ class Router {
     this.changeRoute    = "changeRoute";
     this.defaultRoute   = null;
     window.onload       = e => this.connect();
+    this.middlewares    = {};
   }
+
 
   addDefaultRoute(action) {
     this.defaultRoute = new RoutePath(/([\s\S])+/, action); // matches anything
   }
 
-  addRoute(pattern, action) {
-    this.routes.push(new RoutePath(pattern, action));
+  addRoute(pattern, action, options) {
+    this.routes.push(new RoutePath(pattern, action, options || {}));
   }
 
   parseHash(hash) {
@@ -40,44 +42,59 @@ class Router {
     return matchingRoutes[0];
   }
 
+  pipeThroughMiddleWare(route) {
+    let pipes = route.options.middlewares;
+    if (pipes) {
+      for(var index in pipes) {
+        let callback = pipes[index];
+        route = callback(this, route);
+      }
+    }
+    return route;
+  }
+
   match(hash) {
     let parts = this.parseHash(hash);
-    let route = this.firstMatchingRoute(parts)
-    let error = null;
+    let route = this.firstMatchingRoute(parts);
     if (!route) {
-      error = "NotFound";
-      route = this.defaultRoute;
+      return this.parseMessage(this.defaultRoute, parts, "NotFound");
     }
-    return this.parseMessage(route, parts, error);
+    let ok = this.pipeThroughMiddleWare(route);
+    if (!ok) return;
+    return this.parseMessage(route, parts);
   }
 
   parseMessage(route, parts, error) {
     if (!route) {
-      console.warn("Router: unmatched route and no default", hash);
+      console.warn("Router: unmatched route and no default", parts[1]);
       return null;
     }
     return {
       ...parts,
       error: error,
-      query: queryStringToObject(parts.search),
+      query: queryString.parse(parts.search),
       tokens: route.parseTokens(parts.path),
       action: route.action,
     };
   }
 
+  goTo(location) {
+    window.location.hash = location;
+  }
+
   updateRoute() {
-    console.log("updating route");
+    if (window.location.hash == "" || window.location.hash == "#") {
+      this.goTo("#/");
+      return;
+    }
     let match = this.match(window.location.hash);
-    console.log("match is", match);
     if (match) {
-      console.log("route Matched", match);
       this.channel.publish(this.changeRoute, match);
     }
   }
 
   connect(){
     window.addEventListener("hashchange", event => {
-      console.info("hashchange", event);
       this.updateRoute();
     });
     this.updateRoute();
