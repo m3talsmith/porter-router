@@ -60,4 +60,11 @@ class RoutePath {
   }
 }
 
+if (typeof module != 'undefined') {
+  module.exports = {
+    RoutePath:  RoutePath
+  };
+}
+
 export default RoutePath;
+

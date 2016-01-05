@@ -1,6 +1,6 @@
 {
   "name": "porter-router",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/agrarianlabs/porter-router#readme",
   "description": "A router for porter that acts as a channel to window hash changes and links hash paths to callbacks.",
   "keywords": [

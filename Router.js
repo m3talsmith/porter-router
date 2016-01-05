@@ -4,7 +4,6 @@ import {Channel}              from "porter-client";
 
 import RoutePath              from "./RoutePath";
 
-
 class Router {
   // Broadcasts {path, search, hash, error, query, tokens}
   constructor(channel) {
@@ -101,4 +100,11 @@ class Router {
   }
 }
 
+if (typeof module != 'undefined') {
+  module.exports = {
+    Router:  Router
+  };
+}
+
 export default Router;
+
